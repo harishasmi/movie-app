@@ -1,0 +1,18 @@
+
+body{
+    background: url('https://images.unsplash.com/photo-1489844097929-c8d5b91c456e?dpr=2&auto=compress,format&fit=crop&w=1199&h=798&q=80&cs=tinysrgb&crop=&bg=') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.mainContent{
+    width:50%;
+    margin : 0px auto;
+    text-align: center;
+    padding : 80px;
+}
+.mainContent h1{
+    font-weight: bolder;
+}

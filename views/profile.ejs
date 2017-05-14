@@ -1,0 +1,94 @@
+<% include ./partials/header %>
+
+<div class="container">
+    <% if (welcomeFlash && welcomeFlash.length > 0) { %>
+        <div class="alert alert-dismissible alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <%= welcomeFlash %>
+        </div>
+    <% } %>
+</div>
+<div class="container" ng-init="initialize();">
+    <div class="row">
+        <div class="col-xs-2">
+            <img src="https://placekitten.com/150/200" class="img-responsive" alt="Profile image">
+            <h3> <%= user.fullname %></h3>
+        </div>
+        <div class="col-xs-8">
+            <div class="input-group input-group-sm">
+              <input type="text" class="form-control" ng-model="searchtext" ng-model-options="{ debounce: 1200 }" placeholder="Add a new movie" aria-describedby="sizing-addon3">
+              <span class="input-group-addon">Search Movie <i class="glyphicon glyphicon-search" aria-hidden="true"></i> </span>
+            </div>
+            <div ng-show="show" >
+                <div ng-if="result.Response === 'True'">
+                    <div class="row">
+                      <div class="col-xs-3">
+                          <div class="thumbnail">
+                            <img ng-src="{{ result.Poster =='N/A' ? 'https://placekitten.com/150/160' : result.Poster }}" alt="Movie Poster">
+                            <div style="text-align : center" class="caption">
+                                <p><a href="http://imdb.com/title/{{ result.imdbID }}" target="_blank">{{ result.Title }}</a></p>
+                            </div>
+                          </div>
+                      </div>
+                      <div class="col-xs-9">
+                          <button style="margin-top: 10px;" type="button" class="btn btn-danger btn-xs pull-right" ng-click="setSearchText();">
+                                <span class="glyphicon glyphicon-remove"></span>
+                          </button>
+                          <h5> <span class="label label-info">Cast :</span>  {{ result.Actors }}</h5>
+                          
+                          <h5> <span class="label label-info">Released :</span>  {{ result.Released }}</h5>
+                          <h5> <span class="label label-info">Genre :</span>  {{ result.Genre }}</h5>
+                          <p> <span class="label label-info">Plot :</span>{{ result.Plot }}</p>
+                          <div>  <!-- Modal Div along with the buttons -->
+                            <!--  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                Edit Movie
+                              </button>-->
+                              <button type="button" class="btn btn-primary" ng-click="addMovie(result);">
+                                Add Movie
+                              </button>
+                              <!--Modal Code-->
+                              <% include ./modals/modal-edit %>
+                          </div>
+                      </div>
+                      <div class="col-xs-12" ng-if="relatedResult.Response === 'True'">
+                          <p> <span class="label label-info">Related Results :</span></p>
+                          <ul class="list-inline">
+                              <li ng-repeat="movie in relatedResult.Search">
+                                <a href="#" ng-click="update(movie.Title)">{{ movie.Title }} </a>, {{ movie.Year }}
+                              </li>
+                          </ul>
+                      </div>
+                    </div>
+                </div>
+                <div ng-if="result.Response === 'False'">
+                  <span class="label label-danger">No Movies Found or something else happened !! Search Again  :) </span>
+                </div>
+            </div>
+              <!--Movie list -->
+            <div class="media" ng-repeat="movie in allMovies">
+                    <div class="media-left">  
+                      <a href="http://www.imdb.com/title/{{movie.imdbID}}" target="_blank">
+                        <img style="width:75px;" class="media-object" ng-src="{{ movie.poster =='N/A' ? 'https://placekitten.com/150/160' : movie.poster }}" alt="Movie Poster">
+                      </a>
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">{{movie.title}} 
+                      <small><i>Released on {{movie.released}}</i></small></h4>
+                      <p>{{movie.plot }}</p>
+                      <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#myAnotherModal{{$index}}">More Info</button>
+                      <% include ./modals/modal-details %>
+                    </div>
+            </div>
+            
+        </div>
+        
+        <div class="col-xs-2">
+            <h4> Friends List </h4>
+            <div class="list-group">
+                <a ng-repeat="allUser in allUsers" href="/profile/{{allUser._id}}" class="list-group-item">{{allUser.fullname}}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include ./partials/footer %>

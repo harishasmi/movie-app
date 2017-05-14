@@ -1,0 +1,33 @@
+<div class="modal fade" id="myAnotherModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-margin" role="document">
+    <div class="modal-content modal-lg">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">{{movie.title}}</h4>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-md-4">
+                  <img class="img-responsive" ng-src="{{movie.poster}}">
+              </div>
+              <div class="col-md-8">
+                  <h5> <span class="label label-info">Cast :</span>  {{ movie.actors }}</h5>
+                  <h5> <span class="label label-info">Released :</span>  {{ movie.released }}</h5>
+                  <h5> <span class="label label-info">Genre :</span>  {{ movie.genre }}</h5>
+                  <p> <span class="label label-info">Plot :</span>{{ movie.plot }}</p>
+                  
+                  <a href="http://www.imdb.com/title/{{movie.imdbID}}" target="_blank" class="btn btn-primary btn-md active"> 
+                      Link to IMDB page 
+                  </a>
+                  
+              </div>
+          </div>
+          
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

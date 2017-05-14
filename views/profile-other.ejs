@@ -1,0 +1,42 @@
+<% include ./partials/header %>
+
+<div class="container" ng-init="getUsers();">
+    <div class="row">
+        <div class="col-xs-2">
+            <img src="https://placekitten.com/150/200" class="img-responsive" alt="Profile image">
+            <h3> <%= foundUser.fullname %></h3>
+        </div>
+        <div class="col-xs-8">
+            <a href="/profile"><span class="label label-warning">Go back to Profile</span></a>
+              <!--Movie list -->
+            <% foundUser.movies.forEach(function(movie){ %>
+               <div class="media">
+                    <div class="media-left">
+                      <a href="#">
+                        <img style="width:75px;" class="media-object" ng-src="<%= movie.poster =='N/A' ? 'https://placekitten.com/150/160' : movie.poster %>" alt="Movie Poster">
+                      </a>
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading"><%= movie.title %> 
+                      <small><i>Released on <%= movie.released %></i></small></h4>
+                      <p><%= movie.plot  %> </p>
+                      <button class="btn btn-info btn-xs" data-toggle="modal" data-target="#myAnotherModal<%= movie._id %>">More Info</button>
+                      <% include ./modals/modal-details-fromDB %>
+                    </div>
+                </div> 
+            <% }); %>
+            
+            
+        </div>
+        
+        <div class="col-xs-2">
+            <h4> Friends List </h4>
+            <div class="list-group">
+                <a ng-repeat="allUser in allUsers" href="/profile/{{allUser._id}}" class="list-group-item">{{allUser.fullname}}</a>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<% include ./partials/footer %>
